@@ -21,6 +21,49 @@ function correct(string) {
   return string.replace(/[015]/g, character => obj[character]);
 }
 
+/*[Prompt Name] Find the first non-consecutive number
+Your task is to find the first element of an array that is not consecutive.
+
+By not consecutive we mean not exactly 1 larger than the previous element of the array.
+
+E.g. If we have an array [1,2,3,4,6,7,8] then 1 then 2 then 3 then 4 are all consecutive but 6 is not, so that's the first non-consecutive number.
+
+If the whole array is consecutive then return null2.
+*/
+
+function firstNonConsecutive(arr) {
+  let first;
+  for (let i = 0; i < arr.length; i++) {
+    //checking if consecutive number(arr[i+1]) is equal to its previous(arr[i] + 1)
+    if (arr[i + 1] === arr[i] + 1) {
+      continue;
+    } else {
+      //once first non-consecutive number is found, var first is set equal then loop breaks
+      first = arr[i + 1];
+      break;
+    }
+  }
+  //returs first if it's not undefined else return null
+  return first !== undefined ? first : null;
+}
+/*[Prompt Name] All Star Code Challenge #18
+This Kata is intended as a small challenge for my students
+
+All Star Code Challenge #18
+
+Create a function that accepts 2 string arguments and returns an integer of the count of occurrences the 2nd argument is found in the first one.
+
+If no occurrences can be found, a count of 0 should be returned.
+
+("Hello", "o")  ==>  1
+("Hello", "l")  ==>  2
+("", "z")       ==>  0
+*/
+function strCount(str, letter) {
+  //('Hello',l) -> ['He','','o'] -> 3 - 1 -> 2
+  return str.split(letter).length - 1;
+}
+
 /*[Prompt Name] Thinkful - Logic Drills: Traffic light
 You're writing code to control your town's traffic lights. You need a function to handle each change from green, to yellow, to red, and then to green again.
 
@@ -28,6 +71,7 @@ Complete the function that takes a string as an argument representing the curren
 
 For example, update_light('green') should return 'yellow'.
 */
+
 function updateLight(current) {
   let obj = {
     green: 'yellow',
@@ -36,6 +80,7 @@ function updateLight(current) {
   };
   return obj[current];
 }
+
 /*[Prompt Name] If you can't sleep, just count sheep!!
 If you can't sleep, just count sheep!!
 
@@ -49,6 +94,7 @@ var countSheep = function (num) {
   }
   return newstr;
 };
+
 ///////////////[7 KYU PROBLEMS]
 /*[Prompt Name] Descending Order
 Your task is to make a function that can take any non-negative integer as an argument and return it with its digits in descending order. Essentially, rearrange the digits to create the highest possible number.
@@ -93,6 +139,24 @@ function findOdd(A) {
   for (const [key, value] of Object.entries(obj)) {
     if (value % 2 === 1) {
       return key;
+    }
+  }
+}
+/*[Prompt Name] Two Sum
+Write a function that takes an array of numbers (integers for the tests) and a target number.
+It should find two different items in the array that, when added together, give the target value.
+ The indices of these items should then be returned in a tuple like so: (index1, index2).
+*/
+function twoSum(numbers, target) {
+  //nested forloops to find indexes that equal target
+  //ex: numbers = [1,2,3] , target = [4]
+  //[1 = i, 2 = j, 3] => i(1) + j(2) != 4 so NEXT
+  //[1 = i, 2 , 3 = j] => i(1) + j(3) == 4 so return [i,j]
+  for (let i = 0; i < numbers.length; i++) {
+    for (let j = i + 1; j < numbers.length; j++) {
+      if (numbers[i] + numbers[j] === target) {
+        return [i, j];
+      }
     }
   }
 }
