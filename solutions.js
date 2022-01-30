@@ -21,6 +21,102 @@ function correct(string) {
   return string.replace(/[015]/g, character => obj[character]);
 }
 
+/*[Prompt Name] Grasshopper - Personalized Message
+Create a function that gives a personalized greeting. This function takes two parameters: name and owner.
+
+Use conditionals to return the proper message:
+
+case	return
+name equals owner	'Hello boss'
+otherwise	'Hello guest'
+*/
+function greet(name, owner) {
+  return name === owner ? 'Hello boss' : 'Hello guest';
+}
+
+/*[Prompt Name] Total amount of points
+Our football team finished the championship. The result of each match look like "x:y". Results of all matches are recorded in the collection.
+
+For example: ["3:1", "2:2", "0:1", ...]
+
+Write a function that takes such collection and counts the points of our team in the championship. Rules for counting points for each match:
+
+if x>y - 3 points
+if x<y - 0 point
+if x=y - 1 point
+Notes:
+
+there are 10 matches in the championship
+0 <= x <= 4
+0 <= y <= 4
+*/
+function points(games) {
+  let points = 0;
+  //for each loop to go through each game in games array, compare game[0] which is (x) with game[2] which is (y)
+  //and add points based on rules
+  games.forEach(game =>
+    game[0] > game[2] ? (points += 3) : game[0] === game[2] ? points++ : points
+  );
+  return points;
+}
+/*[Prompt Name] Cat years,Dog years
+/*I have a cat and a dog.
+I got them at the same time as kitten/puppy. That was humanYears years ago.
+Return their respective ages now as [humanYears,catYears,dogYears]
+NOTES:
+
+humanYears >= 1
+humanYears are whole numbers only
+Cat Years
+15 cat years for first year
++9 cat years for second year
++4 cat years for each year after that
+Dog Years
+15 dog years for first year
++9 dog years for second year
++5 dog years for each year after that
+*/
+var humanYearsCatYearsDogYears = function (humanYears) {
+  let dogYears = 15;
+  let catYears = 15;
+  if (humanYears >= 2) {
+    dogYears += 9;
+    catYears += 9;
+  }
+  let i = 2;
+  while (i < humanYears) {
+    dogYears += 5;
+    catYears += 4;
+    i++;
+  }
+  return [humanYears, catYears, dogYears];
+};
+/*[Prompt Name] Sort and Star
+You will be given a vector of strings. You must sort it alphabetically (case-sensitive, and based on the ASCII values of the chars) and then return the first value.
+
+The returned value must be a string, and have "***" between each of its letters.
+
+You should not remove or add elements from/to the array.
+*/
+function twoSort(s) {
+  //sorts array of string alphabetically, takes first element in array
+  //and splits each char individually to join them together with ***
+  return s.sort()[0].split('').join('***');
+}
+/*[Promp Name] Difference of Volumes of Cuboids
+In this simple exercise, you will create a program that will take two lists of integers, a and b. Each list will consist of 3 positive integers above 0, representing the dimensions of cuboids a and b. You must find the difference of the cuboids' volumes regardless of which is bigger.
+
+For example, if the parameters passed are ([2, 2, 3], [5, 4, 1]), the volume of a is 12 and the volume of b is 20. Therefore, the function should return 8.
+
+Your function will be tested with pre-made examples as well as random ones.
+
+If you can, try writing it in one line of code.
+*/
+function findDifference(a, b) {
+  return Math.abs(b[0] * b[1] * b[2] - a[0] * a[1] * a[2]);
+  // return Math.abs(b.reduce((a,b) => a*b) - a.reduce((a,b) => a*b));
+}
+
 /*[Prompt Name] Find the first non-consecutive number
 Your task is to find the first element of an array that is not consecutive.
 
@@ -142,6 +238,56 @@ function findOdd(A) {
     }
   }
 }
+/*[Prompt Name] Counting Duplicates
+Count the number of Duplicates
+Write a function that will return the count of distinct case-insensitive alphabetic characters and numeric digits that occur more than once in the input string. The input string can be assumed to contain only alphabets (both uppercase and lowercase) and numeric digits.
+
+Example
+"abcde" -> 0 # no characters repeats more than once
+"aabbcde" -> 2 # 'a' and 'b'
+"aabBcde" -> 2 # 'a' occurs twice and 'b' twice (`b` and `B`)
+"indivisibility" -> 1 # 'i' occurs six times
+"Indivisibilities" -> 2 # 'i' occurs seven times and 's' occurs twice
+"aA11" -> 2 # 'a' and '1'
+"ABBA" -> 2 # 'A' and 'B' each occur twice
+*/
+function duplicateCount(text) {
+  //set all characters to lower case to avoid any case sensitive problems
+  //set each element in 'text' to a string with .split('')
+  text = text.toLowerCase().split('');
+  let count = 0;
+  let dict = {};
+  //created an object to keep track the count of characters in 'text'
+  text.forEach(char => (!dict[char] ? (dict[char] = 1) : dict[char]++));
+  //looped through object to check for values > 1, if so, add to count
+  for (const [key, value] of Object.entries(dict)) {
+    if (value > 1) {
+      count++;
+    }
+  }
+  return count;
+}
+/*[Prompt Name] Unique In Order
+Implement the function unique_in_order which takes as argument a sequence and returns a list of items without any elements with the same value next to each other and preserving the original order of elements.
+
+For example:
+
+uniqueInOrder('AAAABBBCCDAABBB') == ['A', 'B', 'C', 'D', 'A', 'B']
+uniqueInOrder('ABBCcAD')         == ['A', 'B', 'C', 'c', 'A', 'D']
+uniqueInOrder([1,2,2,3,3])       == [1,2,3]
+*/
+var uniqueInOrder = function (iterable) {
+  let newarr = [];
+  for (let i = 0; i < iterable.length; i++) {
+    //checking if current element is not equal to next element, in other words, checking if
+    //current element is unique, if true, then push current element into new array else do nothing
+    if (iterable[i] !== iterable[i + 1]) {
+      newarr.push(iterable[i]);
+    }
+  }
+  return newarr;
+};
+
 /*[Prompt Name] Two Sum
 Write a function that takes an array of numbers (integers for the tests) and a target number.
 It should find two different items in the array that, when added together, give the target value.
