@@ -211,6 +211,24 @@ function descendingOrder(n) {
       .join('')
   );
 }
+/*[Prompt Name] Find the middle element
+As a part of this Kata, you need to create a function that when provided with a triplet, returns the index of the numerical element that lies between the other two elements.
+
+The input to the function will be an array of three distinct numbers (Haskell: a tuple).
+
+For example:
+
+gimme([2, 3, 1]) => 0
+2 is the number that fits between 1 and 3 and the index of 2 in the input array is 0.
+*/
+function gimme(triplet) {
+  //used .splice to create a shallow copy
+  let newarr = triplet.splice();
+  //sorted so can easily call the middle element
+  newarr.sort((a, b) => a - b);
+  //returns index of middle element from original array
+  return triplet.indexOf(newarr[1]);
+}
 ///////////////[6 KYU PROBLEMS]
 /*[Prompt Name] Find the odd int
 Given an array of integers, find the one that appears an odd number of times.
@@ -238,6 +256,56 @@ function findOdd(A) {
     }
   }
 }
+/*[Prompt Name] Playing with digits
+Some numbers have funny properties. For example:
+
+89 --> 8¹ + 9² = 89 * 1
+
+695 --> 6² + 9³ + 5⁴= 1390 = 695 * 2
+
+46288 --> 4³ + 6⁴+ 2⁵ + 8⁶ + 8⁷ = 2360688 = 46288 * 51
+
+Given a positive integer n written as abcd... (a, b, c, d... being digits) and a positive integer p
+
+we want to find a positive integer k, if it exists, such as the sum of the digits of n taken to the successive powers of p is equal to k * n.
+In other words:
+
+Is there an integer k such as : (a ^ p + b ^ (p+1) + c ^(p+2) + d ^ (p+3) + ...) = n * k
+
+If it is the case we will return k, if not return -1.
+
+Note: n and p will always be given as strictly positive integers.
+
+digPow(89, 1) should return 1 since 8¹ + 9² = 89 = 89 * 1
+digPow(92, 1) should return -1 since there is no k such as 9¹ + 2² equals 92 * k
+digPow(695, 2) should return 2 since 6² + 9³ + 5⁴= 1390 = 695 * 2
+digPow(46288, 3) should return 51 since 4³+ 6⁴+ 2⁵ + 8⁶ + 8⁷ = 2360688 = 46288 * 51
+*/
+function digPow(n, p) {
+  let numbers = n.toString();
+  let sum = 0;
+  //used a loop to iterate through each number in n and add it to the sum
+  //with each number being multipled with p + i
+  for (let i = 0; i < numbers.length; i++) {
+    sum += Math.pow(numbers[i], p + i);
+  }
+  //returns "k" if sum % n is divisible, -1 if not
+  if (sum % n === 0) return parseInt(sum / n);
+  return -1;
+}
+/*[Prompt Name] Find the unique number
+There is an array with some numbers. All numbers are equal except for one. Try to find it!
+
+findUniq([ 1, 1, 1, 2, 1, 1 ]) === 2
+findUniq([ 0, 0, 0.55, 0, 0 ]) === 0.55
+It’s guaranteed that array contains at least 3 numbers.
+*/
+function findUniq(arr) {
+  //returns the number that is only found once in the array arr
+  //as finding a number with its first occurence and last occurence being equal makes it a unique number
+  return arr.find(n => arr.indexOf(n) === arr.lastIndexOf(n));
+}
+
 /*[Prompt Name] Counting Duplicates
 Count the number of Duplicates
 Write a function that will return the count of distinct case-insensitive alphabetic characters and numeric digits that occur more than once in the input string. The input string can be assumed to contain only alphabets (both uppercase and lowercase) and numeric digits.
