@@ -192,6 +192,43 @@ var countSheep = function (num) {
 };
 
 ///////////////[7 KYU PROBLEMS]
+/*[Prompt Name] Shortest Word
+Simple, given a string of words, return the length of the shortest word(s).
+
+String will never be empty and you do not need to account for different data types.
+*/
+function findShort(s) {
+  let news = s.split(' ');
+  let newarr = [];
+  for (let i = 0; i < news.length; i++) {
+    newarr.push(news[i].length);
+  }
+  return newarr.sort((a, b) => a - b)[0];
+}
+/*[Prompt Name] Make a funciton that does arithmetic!
+Given two numbers and an arithmetic operator (the name of it, as a string), return the result of the two numbers having that operator used on them.
+
+a and b will both be positive integers, and a will always be the first number in the operation, and b always the second.
+
+The four operators are "add", "subtract", "divide", "multiply".
+
+A few examples:(Input1, Input2, Input3 --> Output)
+
+5, 2, "add"      --> 7
+5, 2, "subtract" --> 3
+5, 2, "multiply" --> 10
+5, 2, "divide"   --> 2.5
+*/
+function arithmetic(a, b, operator) {
+  let dict = {
+    divide: a / b,
+    multiply: a * b,
+    add: a + b,
+    subtract: a - b,
+  };
+  return dict[operator];
+}
+
 /*[Prompt Name] Descending Order
 Your task is to make a function that can take any non-negative integer as an argument and return it with its digits in descending order. Essentially, rearrange the digits to create the highest possible number.
 
