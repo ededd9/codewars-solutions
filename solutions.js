@@ -192,6 +192,21 @@ var countSheep = function (num) {
 };
 
 ///////////////[7 KYU PROBLEMS]
+/*[Prompt Name] Find the capitals
+Write a function that takes a single string (word) as argument. The function must return an ordered list containing the indexes of all capital letters in the string.
+
+Example
+Test.assertSimilar( capitals('CodEWaRs'), [0,3,4,6] );
+*/
+var capitals = function (word) {
+  let arr = [];
+  for (const letter of word) {
+    if (letter === letter.toUpperCase()) {
+      arr.push(word.indexOf(letter));
+    }
+  }
+  return arr;
+};
 /*[Prompt Name] Shortest Word
 Simple, given a string of words, return the length of the shortest word(s).
 
@@ -267,7 +282,136 @@ function gimme(triplet) {
   return triplet.indexOf(newarr[1]);
 }
 ///////////////[6 KYU PROBLEMS]
-/*[Prompt Name] Find the odd int
+/*[Prompt Name] Sort th odd
+You will be given an array of numbers. You have to sort the odd numbers in ascending order while leaving the even numbers at their original positions.
+
+Examples
+[7, 1]  =>  [1, 7]
+[5, 8, 6, 3, 4]  =>  [3, 8, 6, 5, 4]
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]  =>  [1, 8, 3, 6, 5, 4, 7, 2, 9, 0]
+*/
+function sortArray(array) {
+  //used two important methods, .filter to filter the odd numbers in the array 'array'
+  //used .sort to sort the odd numbers in an ascending order into the array 'oddarray
+  let oddarray = array
+    .filter(x => x % 2 === 1 || x % 2 === -1)
+    .sort((a, b) => a - b);
+  //.map to return a new version of the origin array where if the current num is even then keep the same value if not, shift a num from the oddarray
+  return array.map(num => (num % 2 === 0 ? num : oddarray.shift()));
+}
+/*[Prompt Name] Who likes it?
+You probably know the "like" system from Facebook and other pages. People can "like" blog posts, pictures or other items. We want to create the text that should be displayed next to such an item.
+
+Implement the function which takes an array containing the names of people that like an item. It must return the display text as shown in the examples:
+
+[]                                -->  "no one likes this"
+["Peter"]                         -->  "Peter likes this"
+["Jacob", "Alex"]                 -->  "Jacob and Alex like this"
+["Max", "John", "Mark"]           -->  "Max, John and Mark like this"
+["Alex", "Jacob", "Mark", "Max"]  -->  "Alex, Jacob and 2 others like this"
+Note: For 4 or more names, the number in "and 2 others" simply increases.
+*/
+function likes(names) {
+  names = names || [];
+  switch (names.length) {
+    case 0:
+      return 'no one likes this';
+    case 1:
+      return `${names[0]} likes this`;
+    case 2:
+      return `${names[0]} and ${names[1]} like this`;
+    case 3:
+      return `${names[0]}, ${names[1]} and ${names[2]} like this`;
+    default:
+      return `${names[0]}, ${names[1]} and ${
+        names.length - 2
+      } others like this`;
+  }
+}
+/*[Prompt Name] Stop gninnipS My sdroW!
+Write a function that takes in a string of one or more words, and returns the same string, but with all five or more letter words reversed (Just like the name of this Kata). Strings passed in will consist of only letters and spaces. Spaces will be included only when more than one word is present.
+
+Examples: spinWords( "Hey fellow warriors" ) => returns "Hey wollef sroirraw" spinWords( "This is a test") => returns "This is a test" spinWords( "This is another test" )=> returns "This is rehtona test"
+*/
+
+function spinWords(string) {
+  var newstring = string.split(' ');
+  let newarr = [];
+  for (let i = 0; i < newstring.length; i++) {
+    if (newstring[i].length >= 5) {
+      newarr.push(reverseStr(newstring[i]));
+    } else {
+      newarr.push(newstring[i]);
+    }
+  }
+  return newarr.join(' ');
+}
+// helper function to reverse string
+function reverseStr(str) {
+  let newstr = '';
+  for (let i = str.length - 1; i >= 0; i--) {
+    newstr += str[i];
+  }
+  return newstr;
+}
+/*[Prompt Name] Highest Scoring Word
+Given a string of words, you need to find the highest scoring word.
+
+Each letter of a word scores points according to its position in the alphabet: a = 1, b = 2, c = 3 etc.
+
+You need to return the highest scoring word as a string.
+
+If two words score the same, return the word that appears earliest in the original string.
+
+All letters will be lowercase and all inputs will be valid.
+
+*/
+function high(x) {
+  x = x.split(' ');
+  let arr = [];
+  for (let i = 0; i < x.length; i++) {
+    let total = 0;
+    for (let j = 0; j < x[i].length; j++) {
+      total += x[i].charCodeAt(j) - 96;
+    }
+    arr.push(total);
+  }
+  let highest = Math.max(...arr);
+  //   return arr.indexOf(highest)
+  return x[arr.indexOf(highest)];
+
+  /*[Prompt Name] Multiples of 3 or 5
+If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+
+Finish the solution so that it returns the sum of all the multiples of 3 or 5 below the number passed in. Additionally, if the number is negative, return 0 (for languages that do have them).
+
+Note: If the number is a multiple of both 3 and 5, only count it once.
+*/
+  function solution(number) {
+    let sum = 0;
+    for (let i = 0; i < number; i++) {
+      if (i % 3 === 0 || i % 5 === 0) {
+        sum += i;
+      }
+    }
+    return sum;
+  }
+  /*[Prompt Name] Detect Pangram
+A pangram is a sentence that contains every single letter of the alphabet at least once. For example, the sentence "The quick brown fox jumps over the lazy dog" is a pangram, because it uses the letters A-Z at least once (case is irrelevant).
+
+Given a string, detect whether or not it is a pangram. Return True if it is, False if not. Ignore numbers and punctuation.
+*/
+  function isPangram(string) {
+    //created an array with all lower case characters and used .match method
+    //in order to have the array consisting of only alphabet characters
+    let letters = string.toLowerCase().match(/[a-z]/g);
+    //Created a set to limit each alphabet characters appearance by 1 time
+    //and used brackets and spread in order to convert the set into an array
+    let alphabet = [...new Set(letters)];
+    //Lastly, the alphabets length is equal to 26, return true
+    return alphabet.length == 26;
+  }
+  /*[Prompt Name] Find the odd int
 Given an array of integers, find the one that appears an odd number of times.
 
 There will always be only one integer that appears an odd number of times.
@@ -279,21 +423,21 @@ Examples
 [0,1,0,1,0] should return 0, because it occurs 3 times (which is odd).
 [1,2,2,3,3,3,4,3,3,3,2,2,1] should return 4, because it appears 1 time (which is odd).
 */
-function findOdd(A) {
-  let obj = {};
-  //looped through parameter A to check if number exists in obj, if T add to its count, if F set count to 1
-  A.forEach(num => {
-    obj[num] ? obj[num]++ : (obj[num] = 1);
-  });
-  console.log(obj);
-  //looped through obj to check for an odd value, once found, returns its key
-  for (const [key, value] of Object.entries(obj)) {
-    if (value % 2 === 1) {
-      return key;
+  function findOdd(A) {
+    let obj = {};
+    //looped through parameter A to check if number exists in obj, if T add to its count, if F set count to 1
+    A.forEach(num => {
+      obj[num] ? obj[num]++ : (obj[num] = 1);
+    });
+    console.log(obj);
+    //looped through obj to check for an odd value, once found, returns its key
+    for (const [key, value] of Object.entries(obj)) {
+      if (value % 2 === 1) {
+        return key;
+      }
     }
   }
-}
-/*[Prompt Name] Playing with digits
+  /*[Prompt Name] Playing with digits
 Some numbers have funny properties. For example:
 
 89 --> 8¹ + 9² = 89 * 1
@@ -318,32 +462,32 @@ digPow(92, 1) should return -1 since there is no k such as 9¹ + 2² equals 92 *
 digPow(695, 2) should return 2 since 6² + 9³ + 5⁴= 1390 = 695 * 2
 digPow(46288, 3) should return 51 since 4³+ 6⁴+ 2⁵ + 8⁶ + 8⁷ = 2360688 = 46288 * 51
 */
-function digPow(n, p) {
-  let numbers = n.toString();
-  let sum = 0;
-  //used a loop to iterate through each number in n and add it to the sum
-  //with each number being multipled with p + i
-  for (let i = 0; i < numbers.length; i++) {
-    sum += Math.pow(numbers[i], p + i);
+  function digPow(n, p) {
+    let numbers = n.toString();
+    let sum = 0;
+    //used a loop to iterate through each number in n and add it to the sum
+    //with each number being multipled with p + i
+    for (let i = 0; i < numbers.length; i++) {
+      sum += Math.pow(numbers[i], p + i);
+    }
+    //returns "k" if sum % n is divisible, -1 if not
+    if (sum % n === 0) return parseInt(sum / n);
+    return -1;
   }
-  //returns "k" if sum % n is divisible, -1 if not
-  if (sum % n === 0) return parseInt(sum / n);
-  return -1;
-}
-/*[Prompt Name] Find the unique number
+  /*[Prompt Name] Find the unique number
 There is an array with some numbers. All numbers are equal except for one. Try to find it!
 
 findUniq([ 1, 1, 1, 2, 1, 1 ]) === 2
 findUniq([ 0, 0, 0.55, 0, 0 ]) === 0.55
 It’s guaranteed that array contains at least 3 numbers.
 */
-function findUniq(arr) {
-  //returns the number that is only found once in the array arr
-  //as finding a number with its first occurence and last occurence being equal makes it a unique number
-  return arr.find(n => arr.indexOf(n) === arr.lastIndexOf(n));
-}
+  function findUniq(arr) {
+    //returns the number that is only found once in the array arr
+    //as finding a number with its first occurence and last occurence being equal makes it a unique number
+    return arr.find(n => arr.indexOf(n) === arr.lastIndexOf(n));
+  }
 
-/*[Prompt Name] Counting Duplicates
+  /*[Prompt Name] Counting Duplicates
 Count the number of Duplicates
 Write a function that will return the count of distinct case-insensitive alphabetic characters and numeric digits that occur more than once in the input string. The input string can be assumed to contain only alphabets (both uppercase and lowercase) and numeric digits.
 
@@ -356,23 +500,23 @@ Example
 "aA11" -> 2 # 'a' and '1'
 "ABBA" -> 2 # 'A' and 'B' each occur twice
 */
-function duplicateCount(text) {
-  //set all characters to lower case to avoid any case sensitive problems
-  //set each element in 'text' to a string with .split('')
-  text = text.toLowerCase().split('');
-  let count = 0;
-  let dict = {};
-  //created an object to keep track the count of characters in 'text'
-  text.forEach(char => (!dict[char] ? (dict[char] = 1) : dict[char]++));
-  //looped through object to check for values > 1, if so, add to count
-  for (const [key, value] of Object.entries(dict)) {
-    if (value > 1) {
-      count++;
+  function duplicateCount(text) {
+    //set all characters to lower case to avoid any case sensitive problems
+    //set each element in 'text' to a string with .split('')
+    text = text.toLowerCase().split('');
+    let count = 0;
+    let dict = {};
+    //created an object to keep track the count of characters in 'text'
+    text.forEach(char => (!dict[char] ? (dict[char] = 1) : dict[char]++));
+    //looped through object to check for values > 1, if so, add to count
+    for (const [key, value] of Object.entries(dict)) {
+      if (value > 1) {
+        count++;
+      }
     }
+    return count;
   }
-  return count;
-}
-/*[Prompt Name] Unique In Order
+  /*[Prompt Name] Unique In Order
 Implement the function unique_in_order which takes as argument a sequence and returns a list of items without any elements with the same value next to each other and preserving the original order of elements.
 
 For example:
@@ -381,33 +525,70 @@ uniqueInOrder('AAAABBBCCDAABBB') == ['A', 'B', 'C', 'D', 'A', 'B']
 uniqueInOrder('ABBCcAD')         == ['A', 'B', 'C', 'c', 'A', 'D']
 uniqueInOrder([1,2,2,3,3])       == [1,2,3]
 */
-var uniqueInOrder = function (iterable) {
-  let newarr = [];
-  for (let i = 0; i < iterable.length; i++) {
-    //checking if current element is not equal to next element, in other words, checking if
-    //current element is unique, if true, then push current element into new array else do nothing
-    if (iterable[i] !== iterable[i + 1]) {
-      newarr.push(iterable[i]);
+  var uniqueInOrder = function (iterable) {
+    let newarr = [];
+    for (let i = 0; i < iterable.length; i++) {
+      //checking if current element is not equal to next element, in other words, checking if
+      //current element is unique, if true, then push current element into new array else do nothing
+      if (iterable[i] !== iterable[i + 1]) {
+        newarr.push(iterable[i]);
+      }
     }
-  }
-  return newarr;
-};
+    return newarr;
+  };
 
-/*[Prompt Name] Two Sum
+  /*[Prompt Name] Two Sum
 Write a function that takes an array of numbers (integers for the tests) and a target number.
 It should find two different items in the array that, when added together, give the target value.
  The indices of these items should then be returned in a tuple like so: (index1, index2).
 */
-function twoSum(numbers, target) {
-  //nested forloops to find indexes that equal target
-  //ex: numbers = [1,2,3] , target = [4]
-  //[1 = i, 2 = j, 3] => i(1) + j(2) != 4 so NEXT
-  //[1 = i, 2 , 3 = j] => i(1) + j(3) == 4 so return [i,j]
-  for (let i = 0; i < numbers.length; i++) {
-    for (let j = i + 1; j < numbers.length; j++) {
-      if (numbers[i] + numbers[j] === target) {
-        return [i, j];
+  function twoSum(numbers, target) {
+    //nested forloops to find indexes that equal target
+    //ex: numbers = [1,2,3] , target = [4]
+    //[1 = i, 2 = j, 3] => i(1) + j(2) != 4 so NEXT
+    //[1 = i, 2 , 3 = j] => i(1) + j(3) == 4 so return [i,j]
+    for (let i = 0; i < numbers.length; i++) {
+      for (let j = i + 1; j < numbers.length; j++) {
+        if (numbers[i] + numbers[j] === target) {
+          return [i, j];
+        }
       }
     }
   }
+}
+///////////////[5 KYU PROBLEMS]
+/*[Prompt Name] String incrementer
+Your job is to write a function which increments a string, to create a new string.
+
+If the string already ends with a number, the number should be incremented by 1.
+If the string does not end with a number. the number 1 should be appended to the new string.
+Examples:
+
+foo -> foo1
+
+foobar23 -> foobar24
+
+foo0042 -> foo0043
+
+foo9 -> foo10
+
+foo099 -> foo100
+
+Attention: If the number has leading zeros the amount of digits should be considered.
+*/
+function incrementString(strng) {
+  //.replace method to replace any num to ''
+  var chars = strng.replace(/[0-9]/g, '');
+  //.slice method to return a copy of the strng array that only contain numbers
+  var str = strng.slice(chars.length) || '0';
+  //calculating difference between lengths to know how many 0's must be added to the var str
+  var lenDif = strng.length - chars.length;
+  str = (parseInt(str) + 1).toString();
+  //as long as the current length of the str value(always starts at 1) it not greater than the difference in lengths between the numbers
+  //and character then keep adding a "0" to the front of the str value
+  //example: while(1 < 3) => "1" = "0" + "1" => str = "01", while(2 < 3) => "01" = "0" + "1" => str = "001", END LOOP SINCE 3 < 3 condition is not true
+  while (str.length < lenDif) {
+    str = '0' + str;
+  }
+  return chars.concat(str);
 }
