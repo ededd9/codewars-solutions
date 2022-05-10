@@ -557,6 +557,79 @@ It should find two different items in the array that, when added together, give 
   }
 }
 ///////////////[5 KYU PROBLEMS]
+/*[Prompt Name] Rot13
+ROT13 is a simple letter substitution cipher that replaces a letter with the letter 13 letters after it in the alphabet. ROT13 is an example of the Caesar cipher.
+
+Create a function that takes a string and returns the string ciphered with Rot13. If there are numbers or special characters included in the string, they should be returned as they are. Only letters from the latin/english alphabet should be shifted, like in the original Rot13 "implementation".
+*/
+function rot13(message) {
+  var lower = 'abcdefghijklmnopqrstuvwxyz';
+  var upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let newmsg = '';
+  for (let i = 0; i < message.length; i++) {
+    if (message[i].match(/[a-z]/)) {
+      let alphapos = lower.indexOf(message[i]);
+      alphapos = alphapos + 13;
+      if (alphapos >= 26) {
+        alphapos = alphapos - 26;
+        newmsg += lower[alphapos];
+      } else {
+        newmsg += lower[alphapos];
+      }
+    } else if (message[i].match(/[A-Z]/)) {
+      let alphapos = upper.indexOf(message[i]);
+      alphapos = alphapos + 13;
+      if (alphapos >= 26) {
+        alphapos = alphapos - 26;
+        newmsg += upper[alphapos];
+      } else {
+        newmsg += upper[alphapos];
+      }
+    } else {
+      newmsg += message[i];
+    }
+  }
+  return newmsg;
+}
+/*[Prompt Name] Regex Password Validation
+You need to write regex that will validate a password to make sure it meets the following criteria:
+
+At least six characters long
+contains a lowercase letter
+contains an uppercase letter
+contains a number
+Valid passwords will only be alphanumeric characters.
+*/
+function validate(password) {
+  var lower = false;
+  var upper = false;
+  var hasNum = false;
+  var hasSpec = false;
+  var length = password.length >= 6;
+  for (let i = 0; i < password.length; i++) {
+    if (password[i].match(/[a-z]+/)) {
+      //       console.log('lower',password[i])
+      lower = true;
+    }
+    if (password[i].match(/[A-Z]+/)) {
+      //       console.log('upper', password[i])
+      upper = true;
+    }
+    if (password[i].match(/[0-9]+/)) {
+      //       console.log('digit', password[i])
+      hasNum = true;
+    }
+    if (password[i].match(/[~`!#$%\^&*+=\-\[\]\\';, /{}|\\":<>\?]/)) {
+      //       console.log('SPECIAL',password[i])
+      hasSpec = true;
+    }
+  }
+
+  //   console.log(password,':','len', length,'low', lower,'u', upper,'n', hasNum)
+  let result = length && lower && upper && hasNum && !hasSpec;
+  //   console.log('result', result)
+  return result;
+}
 /*[Prompt Name] String incrementer
 Your job is to write a function which increments a string, to create a new string.
 
